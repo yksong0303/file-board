@@ -10,7 +10,7 @@
 <form method="POST" action="/photo/write" enctype="multipart/form-data">
 	제목 : <input type="text" name="pbTitle"><br>
 	내용 : <textarea name="pbContent"></textarea><br>
-	사진 : <input type="file" name="pbPhotoName"><br>
+	사진 : <input type="file" name="pbfile"><br>
 	<button>글쓰기</button>	
 </form>
 </body>
