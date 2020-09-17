@@ -4,13 +4,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Member">
 	<select id="selectPb" resultType="map" parameterType="map">
-		select * from photo_board;
+		select * from photo_board
 	</select>
 	
-	<insert id="insertPb" parameterType="int">
+	<insert id="insertPb" parameterType="com.file.board.vo.PhotoBoardVO">
 		insert into
 		photo_board(pb_num,pb_title,pb_content,pb_photo_name,pb_photo_path,credat,cretim)
-		values(seq_pbNum.nextval,#{pb_title},#{pb_content},#{pb_photo_name},#{pb_photo_path},TO_CHAR(sysdate,
-		'YYYYMMDD'), TO_CHAR(sysdate,H'H24MISS'));
+		values(seq_pbNum.nextval,
+		#{pbTitle},
+		#{pbContent},
+		<if test="pbPhotoName==null">
+		null,null
+		</if>
+		<if test="pbPhotoName!null">
+		#{pbPhotoName,#{pbPhotoPath}
+		</if>,
+		TO_CHAR(sysdate,'YYYYMMDD'),
+		 TO_CHAR(sysdate,'HH24MISS'))
 	</insert>
 </mapper>

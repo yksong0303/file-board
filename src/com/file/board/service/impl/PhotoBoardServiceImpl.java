@@ -13,11 +13,11 @@ import com.file.board.vo.PhotoBoardVO;
 public class PhotoBoardServiceImpl implements PhotoBoardService{
 	
 	@Autowired
-	private PhotoBoardService pbser;
+	private PhotoBoardDAOImpl pbdao;
 	
 	@Override
 	public int insertPhotoBoard(MultipartFile file, PhotoBoardVO pb) {
-		return pbser.insertPhotoBoard(file, pb);
+		return pbdao.insertPhotoBoard(file, pb);
 	}
 
 }
