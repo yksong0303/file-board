@@ -1,5 +1,7 @@
 package com.file.board.dao.impl;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,4 +32,21 @@ public class PhotoBoardDAOImpl implements PhotoboardDAO {
 		return cnt;
 	}
 
+
+	@Override
+	public List<PhotoBoardVO> selectPhotoBoardList(PhotoBoardVO pb) {
+		try(SqlSession ss = ssf.openSession()){
+			return ss.selectList("selectPbList",pb);
+		}
+		
+	}
+	public int selectPhotoBoardCount(PhotoBoardVO pb) {
+	    try(SqlSession ss =ssf.openSession()){
+	       return ss.selectOne("selectPhotoBoardCount", pb);
+	    }
+	 }
+
+
 }
+
+

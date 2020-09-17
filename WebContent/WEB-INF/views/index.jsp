@@ -5,10 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<jsp:include page="photo/common/header.jsp"></jsp:include>
 </head>
 <body>
-<div>파일 업로드 프로젝트</div>
+<H1>파일 업로드 프로젝트</H1>
+<jsp:include page="photo/common/head.jsp"></jsp:include>
 ${msg}
-<a href="/photo/list">게시판가기</a> 
+<img src="/resources/OIP.png">
+
 </body>
 </html>
