@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -52,6 +54,19 @@ public class PhotoBoardServiceImpl implements PhotoBoardService{
 
 		return cnt;
 	}
+	
+	@Override
+	public List<PhotoBoardVO> selectPhotoBoard(PhotoBoardVO pb, Model model) {
+		pbdao.updateViewCnt(1);
+		model.addAttribute("select",pbdao.selectPhotoBoard(pb));
+		return pbdao.selectPhotoBoard(pb);
+	}
+	
+	@Override
+	public int updatePhotoBoard(MultipartFile file, PhotoBoardVO pb) {
+		// TODO Auto-generated method stub
+		return pbdao.updatePhotoBoard(pb);
+	}
 
 	@Override
 	public List<PhotoBoardVO> selectPhotoBoardList(PhotoBoardVO pb, Model model) {
@@ -79,7 +94,26 @@ public class PhotoBoardServiceImpl implements PhotoBoardService{
 		model.addAttribute("pbList",pbdao.selectPhotoBoardList(pb));
 		return null;
 	}
-	
+	//file.delete();
+
+	@Override
+	public int deletePhotoBoard(int[] pbNums) {
+		List<PhotoBoardVO> pbList = pbdao.selectPhotoBoardsForDelete(pbNums);
+		if(!pbList.isEmpty()) {
+			for(PhotoBoardVO pb : pbList) {
+				String fileName= pb.getPbPhotoPath();
+				File f = new File(uploadPath+fileName);
+				if(f.exists()) {
+					f.delete();
+				}
+			}
+		}
+			return pbdao.deletePhotoBoard(pbNums);
+	}
+
+
+
+
 	
 //	public static void main(String[] args) {
 //		PhotoboardDAO pbdao = new PhotoBoardDAOImpl();

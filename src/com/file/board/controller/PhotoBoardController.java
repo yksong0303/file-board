@@ -25,14 +25,30 @@ public class PhotoBoardController {
 	public String goList(@ModelAttribute PhotoBoardVO pb, Model model) {
 //		model.addAttribute("pbList",pbService.selectPhotoBoardList(null));
 //		System.out.println(pbService.selectPhotoBoardList(null));
+		
 		if(pb.getPage()==null) {
 			pb.setPage(new PageVO());
 			pb.getPage().setPageNum(1);
 		}
 		
+		System.out.println("리스트 들어옴"+pb);
 		pbService.selectPhotoBoardList(pb,model);
+		
+		
 		return "photo/list";
 	}
+	@RequestMapping(value="/photo/delete", method=RequestMethod.POST)
+	public String deletePhotoBoards(@RequestParam("pbNums") int[] pbNums,@ModelAttribute PhotoBoardVO pb) {
+		pbService.deletePhotoBoard(pbNums);
+		System.out.println("딜리트"+pb.getPbTitle()+pb.getPbContent());
+		return "redirect:/photo/list?page.pageNum=1";
+	}
+	@RequestMapping(value="/photo/update", method=RequestMethod.GET)
+	public String goUpdate(@ModelAttribute PhotoBoardVO pb) {
+		pbService.selectPhotoBoard(pb, null);
+		return "photo/update";
+	}
+	
 	@RequestMapping(value="/photo/write", method=RequestMethod.GET)
 	public String goWrite() {
 		return "photo/write";

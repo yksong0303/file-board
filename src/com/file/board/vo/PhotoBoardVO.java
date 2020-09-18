@@ -10,8 +10,11 @@ public class PhotoBoardVO {
 	private String pbPhotoName;
 	private String pbPhotoPath;
 	private String credat;
+	private String credat1;
+	private String credat2;
 	private String cretim;
 	private PageVO page;
+	private String viewCnt;
 
 
 }

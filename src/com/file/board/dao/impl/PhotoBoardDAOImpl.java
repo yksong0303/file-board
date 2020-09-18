@@ -1,5 +1,6 @@
 package com.file.board.dao.impl;
 
+import java.io.File;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -31,8 +32,23 @@ public class PhotoBoardDAOImpl implements PhotoboardDAO {
 		
 		return cnt;
 	}
+	@Override
+	public List<PhotoBoardVO> selectPhotoBoard(PhotoBoardVO pb) {
+		try(SqlSession ss = ssf.openSession()){
+			return ss.selectOne("selectPhotoBoard",pb);
+		}
+	}
 
-
+	@Override
+	public int updatePhotoBoard(PhotoBoardVO pb) {
+		int cnt = 0;
+		try(SqlSession ss = ssf.openSession()){
+			cnt = ss.update("PhotoBoardUpdate", pb);
+		}
+		return cnt;
+	}
+	
+	
 	@Override
 	public List<PhotoBoardVO> selectPhotoBoardList(PhotoBoardVO pb) {
 		try(SqlSession ss = ssf.openSession()){
@@ -46,6 +62,47 @@ public class PhotoBoardDAOImpl implements PhotoboardDAO {
 	    }
 	 }
 
+
+	@Override
+	public int deletePhotoBoard(int[] pbNums) {
+		 try(SqlSession ss =ssf.openSession()){
+			 int cnt= 0;
+			 for(int pbNum: pbNums) {
+				 cnt += ss.delete("deletePhotoBoard", pbNum);
+			 }
+		       return cnt;
+		    }
+	}
+
+
+	@Override
+	public List<PhotoBoardVO> selectPhotoBoardsForDelete(int[] pbNums) {
+		 try(SqlSession ss =ssf.openSession()){
+		return ss.selectList("selectPhotoBoardforDelete", pbNums);
+		 }
+	}
+
+	@Override
+	public void updateViewCnt(int param) {
+		 try(SqlSession ss =ssf.openSession()){
+			 ss.update("PhotoBoardViewCnt", param);
+		 }
+		
+	}
+
+	
+
+
+
+	
+//	public static void main(String[] args) {
+//		PhotoBoardVO pv = new PhotoBoardVO();
+//		PhotoBoardDAOImpl pdao = new PhotoBoardDAOImpl();
+//		pv.setPbNum(2);
+//		
+//		System.out.println(pdao.deletePhotoBoard(pv));
+//		
+//	}
 
 }
 
